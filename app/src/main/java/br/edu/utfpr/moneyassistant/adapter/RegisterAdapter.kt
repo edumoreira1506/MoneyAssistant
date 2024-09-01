@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.utfpr.moneyassistant.R
 import br.edu.utfpr.moneyassistant.model.Register
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -27,8 +28,10 @@ class RegisterAdapter (val context: Context, val dataset: List<Register>) : Recy
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
+        val format = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
 
-        holder.textViewValue.text = (if (item.type ==  "Crédito") "+" else "-") + item.value.toString()
+        holder.textViewValue.text = (if (item.type ==  "Crédito") "+ " else "- ") + format.format(item.value)
+
         holder.textViewDetail.text = item.detail
 
         val formatter = SimpleDateFormat("dd/MM/yy", Locale.US)

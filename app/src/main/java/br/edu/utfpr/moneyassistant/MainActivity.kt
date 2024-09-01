@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import br.edu.utfpr.moneyassistant.adapter.RegisterAdapter
 import br.edu.utfpr.moneyassistant.database.DatabaseHandler
 import br.edu.utfpr.moneyassistant.databinding.ActivityMainBinding
+import java.text.NumberFormat
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var database : DatabaseHandler
@@ -34,7 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun onToggleExtract() {
         if (binding.extractText.text == "-") {
-            binding.extractText.text = database.countValues().toString()
+            val format = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+
+            binding.extractText.text = format.format(database.countValues())
             binding.extractButton.text = getString(R.string.hide_value)
         } else {
            this.hideExtract()
