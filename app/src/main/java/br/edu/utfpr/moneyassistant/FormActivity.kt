@@ -10,6 +10,7 @@ import br.edu.utfpr.moneyassistant.database.DatabaseHandler
 import br.edu.utfpr.moneyassistant.databinding.ActivityFormBinding
 import br.edu.utfpr.moneyassistant.model.Register
 import java.text.SimpleDateFormat
+import java.util.Locale
 
 class FormActivity : AppCompatActivity() {
     private lateinit var database : DatabaseHandler
@@ -67,7 +68,7 @@ class FormActivity : AppCompatActivity() {
 
     private fun saveRegister() {
         try {
-            val date = SimpleDateFormat("dd/MM/yyyy").parse(binding.dateInput.text.toString());
+            val date = SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(binding.dateInput.text.toString());
 
             database.insert(
                 Register(

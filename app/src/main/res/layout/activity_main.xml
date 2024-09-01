@@ -14,6 +14,7 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:srcCompat="@android:drawable/ic_menu_add" />
@@ -36,13 +37,14 @@
                 android:insetLeft="8dp"
                 android:insetTop="8dp"
                 android:insetRight="8dp"
-                android:text="Ver saldo" />
+                android:text="@string/see_value" />
 
             <TextView
                 android:id="@+id/extractText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="-" />
+                android:text="-"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

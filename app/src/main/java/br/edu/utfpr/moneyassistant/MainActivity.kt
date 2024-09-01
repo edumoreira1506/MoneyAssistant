@@ -2,11 +2,7 @@ package br.edu.utfpr.moneyassistant
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.RecyclerView
 import br.edu.utfpr.moneyassistant.adapter.RegisterAdapter
 import br.edu.utfpr.moneyassistant.database.DatabaseHandler
 import br.edu.utfpr.moneyassistant.databinding.ActivityMainBinding
@@ -39,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun onToggleExtract() {
         if (binding.extractText.text == "-") {
             binding.extractText.text = database.countValues().toString()
-            binding.extractButton.text = "Ocultar saldo"
+            binding.extractButton.text = getString(R.string.hide_value)
         } else {
            this.hideExtract()
         }
@@ -47,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideExtract() {
         binding.extractText.text = "-"
-        binding.extractButton.text = "Ver saldo"
+        binding.extractButton.text = getString(R.string.see_value)
     }
 
 

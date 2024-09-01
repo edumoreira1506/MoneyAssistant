@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Money Assistant</string>
+    <string name="value">Valor</string>
+    <string name="date">Data</string>
+    <string name="type">Tipo</string>
+    <string name="detail">Detalhe</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="see_value">Ver saldo</string>
+    <string name="hide_value">Ocultar saldo</string>
 </resources>

@@ -28,7 +28,7 @@ class RegisterAdapter (val context: Context, val dataset: List<Register>) : Recy
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
 
-        holder.textViewValue.text = (if (item.type == "Crédito") "+" else "-") + item.value.toString()
+        holder.textViewValue.text = (if (item.type ==  "Crédito") "+" else "-") + item.value.toString()
         holder.textViewDetail.text = item.detail
 
         val formatter = SimpleDateFormat("dd/MM/yy", Locale.US)
