@@ -72,6 +72,9 @@ class DatabaseHandler (context: Context) : SQLiteOpenHelper(context, DATABASE_NA
 
     fun countValues(): Int {
         val registers = this.list()
+
+        if (registers.size == 0) return 0
+
         val (credits, debits) = registers.partition {
             it.type == "Crédito"
         }
