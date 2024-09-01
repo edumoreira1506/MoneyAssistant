@@ -17,21 +17,30 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         database = DatabaseHandler(this)
 
+        binding.addButton.setOnClickListener {
+            this.onAddCLick()
+        }
+
+        this.updateList()
+    }
+
+    private fun updateList() {
         val registers = database.list()
 
         binding.mainContainer.adapter = RegisterAdapter(this, registers)
         binding.mainContainer.setHasFixedSize(false)
+    }
 
-        binding.addButton.setOnClickListener {
-            this.onAddCLick()
-        }
+    override fun onStart() {
+        super.onStart()
+
+        this.updateList()
     }
 
     private fun onAddCLick() {

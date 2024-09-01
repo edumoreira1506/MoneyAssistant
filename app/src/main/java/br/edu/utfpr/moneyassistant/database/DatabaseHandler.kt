@@ -6,7 +6,9 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import br.edu.utfpr.moneyassistant.model.Register
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class DatabaseHandler (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase?) {
@@ -103,30 +105,17 @@ class DatabaseHandler (context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         val registers = mutableListOf<Register>()
 
         while(rawRegisters.moveToNext()) {
+            val formatter = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'XXX yyyy", Locale.ENGLISH)
+            val date = formatter.parse(rawRegisters.getString(DATE_COLUMN_INDEX))
+
             registers.add(Register(
                 _id = rawRegisters.getInt(ID_COLUMN_INDEX),
                 type = rawRegisters.getString(TYPE_COLUMN_INDEX),
                 detail = rawRegisters.getString(DETAIL_COLUMN_INDEX),
                 value = rawRegisters.getInt(VALUE_COLUMN_INDEX),
-                date = Date(Date.parse(rawRegisters.getString(DATE_COLUMN_INDEX))),
+                date = date!!,
             ))
         }
-
-        registers.add(Register(
-            _id = 1,
-            type = "CREDIT",
-            detail = "Saldo",
-            value = 10,
-            date = Date(2024, 1,1)
-        ))
-
-        registers.add(Register(
-            _id = 2,
-            type = "DEBIT",
-            detail = "Aaaaaa",
-            value = 10,
-            date = Date(2024, 1,1)
-        ))
 
         return registers
     }
