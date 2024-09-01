@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private fun onToggleExtract() {
         if (binding.extractText.text == "-") {
             binding.extractText.text = database.countValues().toString()
-            binding.extractButton.text = "Ocultar extrato"
+            binding.extractButton.text = "Ocultar saldo"
         } else {
            this.hideExtract()
         }
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideExtract() {
         binding.extractText.text = "-"
-        binding.extractButton.text = "Ver extrato"
+        binding.extractButton.text = "Ver saldo"
     }
 
 

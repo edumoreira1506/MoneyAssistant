@@ -36,7 +36,7 @@
                 android:insetLeft="8dp"
                 android:insetTop="8dp"
                 android:insetRight="8dp"
-                android:text="Ver extrato" />
+                android:text="Ver saldo" />
 
             <TextView
                 android:id="@+id/extractText"
