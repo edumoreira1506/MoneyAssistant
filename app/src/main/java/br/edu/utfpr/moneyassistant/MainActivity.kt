@@ -23,14 +23,37 @@ class MainActivity : AppCompatActivity() {
 
         database = DatabaseHandler(this)
 
+        database.countValues()
+
         binding.addButton.setOnClickListener {
             this.onAddCLick()
+        }
+
+        binding.extractButton.setOnClickListener {
+            this.onToggleExtract()
         }
 
         this.updateList()
     }
 
+    private fun onToggleExtract() {
+        if (binding.extractText.text == "-") {
+            binding.extractText.text = database.countValues().toString()
+            binding.extractButton.text = "Ocultar extrato"
+        } else {
+           this.hideExtract()
+        }
+    }
+
+    private fun hideExtract() {
+        binding.extractText.text = "-"
+        binding.extractButton.text = "Ver extrato"
+    }
+
+
     private fun updateList() {
+        this.hideExtract()
+
         val registers = database.list()
 
         binding.mainContainer.adapter = RegisterAdapter(this, registers)

@@ -2,12 +2,10 @@ package br.edu.utfpr.moneyassistant.database
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import br.edu.utfpr.moneyassistant.model.Register
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class DatabaseHandler (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -43,54 +41,6 @@ class DatabaseHandler (context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         database.insert(TABLE_NAME, null, newRegister)
     }
 
-    fun update(register: Register) {
-        val database = this.writableDatabase
-        val updatedRegister = ContentValues()
-
-        updatedRegister.put("value",register.value)
-        updatedRegister.put("type", register.type)
-        updatedRegister.put("detail", register.detail)
-        updatedRegister.put("register_date", register.date.toString())
-
-        database.update(
-            TABLE_NAME,
-            updatedRegister,
-            "_id=${register._id}",
-            null
-        )
-    }
-
-    fun delete(id: Int) {
-        val database = this.writableDatabase
-
-        database.delete(TABLE_NAME, "_id=${id}", null)
-    }
-
-    fun find(id: Int): Register? {
-        val database = this.writableDatabase
-        val register = database.query(
-            "registers",
-            null,
-            "_id=${id}",
-            null,
-            null,
-            null,
-            null
-        )
-
-        return if (register.moveToNext()) {
-            Register(
-                _id = id,
-                type = register.getString(TYPE_COLUMN_INDEX),
-                detail = register.getString(DETAIL_COLUMN_INDEX),
-                value = register.getInt(VALUE_COLUMN_INDEX),
-                date = Date(Date.parse(register.getString(DATE_COLUMN_INDEX))),
-            )
-        } else {
-            null
-        }
-    }
-
     fun list(): MutableList<Register> {
         val database = this.writableDatabase
         val rawRegisters = database.query(
@@ -120,18 +70,18 @@ class DatabaseHandler (context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return registers
     }
 
-    fun cursorList(): Cursor {
-        val database = this.writableDatabase
-        val registers = database.query(
-            "registers",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
+    fun countValues(): Int {
+        val registers = this.list()
+        val (credits, debits) = registers.partition {
+            it.type == "Crédito"
+        }
+        val creditValues = credits.fold(0) {
+                                           acc, e -> acc + e.value
+        }
+        val debitValues = debits.fold(0) {
+                acc, e -> acc + e.value
+        }
 
-        return registers
+        return creditValues - debitValues
     }
 }
