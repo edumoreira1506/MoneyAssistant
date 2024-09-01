@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.utfpr.moneyassistant.R
 import br.edu.utfpr.moneyassistant.model.Register
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class RegisterAdapter (val context: Context, val dataset: List<Register>) : RecyclerView.Adapter<RegisterAdapter.ItemViewHolder>() {
     class ItemViewHolder(val view: View): RecyclerView.ViewHolder(view) {
@@ -25,8 +27,12 @@ class RegisterAdapter (val context: Context, val dataset: List<Register>) : Recy
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        holder.textViewValue.text = item.value.toString()
+
+        holder.textViewValue.text = (if (item.type == "CREDIT") "+" else "-") + item.value.toString()
         holder.textViewDetail.text = item.detail
-        holder.testViewDate.text = item.date.toString()
+
+        val formatter = SimpleDateFormat("dd/MM/yy", Locale.US)
+
+        holder.testViewDate.text = formatter.format(item.date)
     }
 }
